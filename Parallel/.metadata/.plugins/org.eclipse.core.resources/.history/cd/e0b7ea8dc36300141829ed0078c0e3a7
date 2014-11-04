@@ -1,0 +1,40 @@
+/*
+ * Erfan Azad
+ * Date: 3 November 2014
+ * File: Seq_QuickHull.java
+ * Description: This file contains methods for solving the quick hull problem sequentially. 
+ */
+
+import java.util.*;
+
+public class Seq_QuickHull {
+	
+	//returns the point with the maximum x value in plist of Points
+	public Point getMax_X(Point[] plist){
+		Point p = plist[0];
+		for(int i=0; i<plist.length; i++){
+			if(plist[i].x > p.x){
+				p = plist[i];
+			}
+		}
+		return p;
+	}
+	
+	//returns the point with the minimum x value in plist of Points
+	public Point getMin_X(Point[] plist){
+		Point p = plist[0];
+		for(int i=0; i<plist.length; i++){
+			if(plist[i].x < p.x){
+				p = plist[i];
+			}
+		}
+		return p;
+	}
+	
+	
+	
+public static void main(String[] args){
+	Point p = new Point(2 , 3);
+	System.out.printf("this is x: %.2f, and this is y: %.2f\n",p.x, p.y);
+}
+}
