@@ -13,6 +13,6 @@ public class Point {
 	}
 	
 	public void point_print(){
-		System.out.printf("( %.2f , %.2f )\n", this.x, this.y);
+		System.out.printf("( %.2f , %.2f )", this.x, this.y);
 	}
 }

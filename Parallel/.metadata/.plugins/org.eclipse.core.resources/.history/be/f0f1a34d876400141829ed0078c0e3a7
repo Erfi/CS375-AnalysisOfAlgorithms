@@ -155,7 +155,7 @@ public class Seq_QuickHull {
 		qh.findBottomConvexHull(plist, pmin, pmax);
 		
 		//printing the result
-		System.out.println("\nConvex Hull Points: " + qh.result.size());
+		System.out.println("Convex Hull Points: " + qh.result.size());
 		for(int j=0; j<qh.result.size(); j++){
 			qh.result.get(j).point_print();
 		}

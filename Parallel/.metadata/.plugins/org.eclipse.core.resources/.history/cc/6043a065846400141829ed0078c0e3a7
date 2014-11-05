@@ -129,33 +129,39 @@ public class Seq_QuickHull {
 	}
 
 	public static void main(String[] args){
-		//creating the list of points to test
-		float min = -20.0f;
-		float max = 20.0f;
-		Random rand = new Random();
-		Point[] plist = new Point[50];
+//		float min = -20.0f;
+//		float max = 20.0f;
+//		Random rand = new Random();
+		Point[] plist = new Point[6];
+//		plist[0] = new Point(-2,-2);
+//		plist[1] = new Point(0,0);
+//		plist[2] = new Point(2,2);
+//		plist[3] = new Point(2,-2);
+//		plist[4] = new Point(-2,2);
+//		plist[5] = new Point(-1,1);
+		
 		System.out.println("Original Points:  " + plist.length);
 		for(int i=0; i<plist.length; i++){
-			Point temp = new Point(rand.nextFloat()*(max - min)+min,rand.nextFloat()*(max - min)+min);
+			Point temp = new Point(rand.nextInt(10),rand.nextInt(10));
 			plist[i] = temp;
 			temp.point_print();
 		}
 		
-		//creating a new instance of the problem
 		Seq_QuickHull qh = new Seq_QuickHull();
 		
-		//pre-processing 
 		Point pmin = qh.getMin_X(plist);
 		Point pmax = qh.getMax_X(plist);
 		qh.result.add(pmin);
 		qh.result.add(pmax);
 		
-		//function call for the top and bottom part
 		qh.findTopConvexHull(plist, pmin, pmax);
 		qh.findBottomConvexHull(plist, pmin, pmax);
-		
-		//printing the result
-		System.out.println("\nConvex Hull Points: " + qh.result.size());
+
+		HashSet hs = new HashSet();
+		hs.addAll(qh.result);
+		qh.result.clear();
+		qh.result.addAll(hs);
+		System.out.println("Convex Hull Points: " + qh.result.size());
 		for(int j=0; j<qh.result.size(); j++){
 			qh.result.get(j).point_print();
 		}

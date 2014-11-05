@@ -78,84 +78,70 @@ public class Seq_QuickHull {
 		}
 	}
 	
-	public void findTopConvexHull(Point[] plist, Point pmin, Point pmax){
+	public void findConvexHull(Point[] plist, Point pmin, Point pmax){
 		if(plist.length == 0){
 			return;
 		}
 		ArrayList<Point> leftList = new ArrayList<Point>();
+		ArrayList<Point> rightList = new ArrayList<Point>();
 		for(int i=0; i<plist.length; i++){//diving the plist to left or right
 			int side = isLeft(pmin, pmax, plist[i]);
 			if(side == 1){
 				leftList.add(plist[i]);
-			}else{
-				continue;
-			}
-		}
-		Point[] leftArray = new Point[leftList.size()];
-		leftList.toArray(leftArray);
-		Point leftPoint_maxDist = getMax_Distance(leftArray,pmin, pmax);
-		
-		if(leftPoint_maxDist != null)
-			this.result.add(leftPoint_maxDist);
-		
-		//recursion happens here 
-		findTopConvexHull(leftArray, pmin, leftPoint_maxDist);
-		findTopConvexHull(leftArray, leftPoint_maxDist, pmax);
-	}
-	
-	public void findBottomConvexHull(Point[] plist, Point pmin, Point pmax){
-		if(plist.length == 0){
-			return;
-		}
-		ArrayList<Point> rightList = new ArrayList<Point>();
-		for(int i=0; i<plist.length; i++){//diving the plist to left or right
-			int side = isLeft(pmin, pmax, plist[i]);
-			if(side == -1){//if on the right side of the line
+			}else if(side == -1){
 				rightList.add(plist[i]);
 			}else{
 				continue;
 			}
 		}
+		Point[] leftArray = new Point[leftList.size()];
 		Point[] rightArray = new Point[rightList.size()];
-		rightList.toArray(rightArray);
-		Point rightPoint_maxDist = getMax_Distance(rightArray,pmin, pmax);
-		
-		if(rightPoint_maxDist != null)
-			this.result.add(rightPoint_maxDist);
+		Point left_maxDist = getMax_Distance(leftList.toArray(leftArray),pmin, pmax);
+		Point right_maxDist = getMax_Distance(rightList.toArray(rightArray),pmin, pmax);
+		if(left_maxDist != null)
+			this.result.add(left_maxDist);
+		if(right_maxDist != null)
+			this.result.add(right_maxDist);
 		
 		//recursion happens here 
-		findBottomConvexHull(rightArray, pmin, rightPoint_maxDist);
-		findBottomConvexHull(rightArray, rightPoint_maxDist, pmax);
+		findConvexHull(leftArray, pmin, left_maxDist);
+		findConvexHull(leftArray, left_maxDist, pmax);
+		findConvexHull(rightArray, right_maxDist, pmax);
+		findConvexHull(rightArray, pmin, right_maxDist);
 	}
 
 	public static void main(String[] args){
-		//creating the list of points to test
-		float min = -20.0f;
-		float max = 20.0f;
-		Random rand = new Random();
-		Point[] plist = new Point[50];
-		System.out.println("Original Points:  " + plist.length);
-		for(int i=0; i<plist.length; i++){
-			Point temp = new Point(rand.nextFloat()*(max - min)+min,rand.nextFloat()*(max - min)+min);
-			plist[i] = temp;
-			temp.point_print();
-		}
+//		float min = -20.0f;
+//		float max = 20.0f;
+//		Random rand = new Random();
+		Point[] plist = new Point[6];
+		plist[0] = new Point(-2,-2);
+		plist[1] = new Point(0,0);
+		plist[2] = new Point(2,2);
+		plist[3] = new Point(2,-2);
+		plist[4] = new Point(-2,2);
+		plist[5] = new Point(1,-1);
 		
-		//creating a new instance of the problem
+		System.out.println("Original Points:  " + plist.length);
+//		for(int i=0; i<plist.length; i++){
+//			Point temp = new Point(rand.nextInt(10),rand.nextInt(10));
+//			plist[i] = temp;
+//			temp.point_print();
+//		}
+		
 		Seq_QuickHull qh = new Seq_QuickHull();
 		
-		//pre-processing 
 		Point pmin = qh.getMin_X(plist);
 		Point pmax = qh.getMax_X(plist);
 		qh.result.add(pmin);
 		qh.result.add(pmax);
 		
-		//function call for the top and bottom part
-		qh.findTopConvexHull(plist, pmin, pmax);
-		qh.findBottomConvexHull(plist, pmin, pmax);
-		
-		//printing the result
-		System.out.println("\nConvex Hull Points: " + qh.result.size());
+		qh.findConvexHull(plist, pmin, pmax);
+		HashSet hs = new HashSet();
+		hs.addAll(qh.result);
+		qh.result.clear();
+		qh.result.addAll(hs);
+		System.out.println("Convex Hull Points: " + qh.result.size());
 		for(int j=0; j<qh.result.size(); j++){
 			qh.result.get(j).point_print();
 		}
