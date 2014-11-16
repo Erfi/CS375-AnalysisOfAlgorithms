@@ -1,0 +1,18 @@
+
+public class DynamicSubsetSum {
+	public boolean subsetExists(int[] set, int sum){
+		boolean[][] Q = new boolean[set.length + 1][sum + 1];
+		
+		for(int i=0; i <= set.length; i++){//for all sum == 0 the Q[i][j] = 0
+			Q[0][i] = true;
+		}
+		
+		
+		
+		
+	}
+	public static void main(String[] args) {
+
+	}
+
+}
