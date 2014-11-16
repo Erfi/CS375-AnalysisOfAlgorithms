@@ -13,9 +13,10 @@ public class DynamicSubsetSum {
 		
 		for(int i=1; i<=sum; i++){
 			for(int j=1; j<=set.length; j++){
-				Q[i][j] = Q[i][j-1];
-				if(i >= set[j-1]){//if sum is bigger than or equal to the j-1th element of set
-					//then 
+				//if the sum can be achieved by smaller subset (Q[i][j-1])
+				//then it can certainly be achieved by a bigger set (Q[i][j])
+				Q[i][j] = Q[i][j-1]; 
+				if(i >= set[j-1]){//if sum is bigger than or equal to the j-1 element of set
 					Q[i][j] = Q[i][j] || Q[i- set[j-1]][j-1];
 				}
 			}
@@ -37,8 +38,8 @@ public class DynamicSubsetSum {
 		return Q[sum][set.length];
 	}
 	public static void main(String[] args) {
-		int[] set = {1, 7, 21, 0, 4 ,8 ,4, 3, 9};
-		int sum = 56;
+		int[] set = {1, 7, 3, 9};
+		int sum = 4;
 		if(subsetExists(set,sum)==true){
 			System.out.println("yup");
 		}else{

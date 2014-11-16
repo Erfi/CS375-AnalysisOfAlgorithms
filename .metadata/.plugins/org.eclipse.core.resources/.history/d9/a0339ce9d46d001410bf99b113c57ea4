@@ -37,8 +37,8 @@ public class DynamicSubsetSum {
 		return Q[sum][set.length];
 	}
 	public static void main(String[] args) {
-		int[] set = {1, 7, 21, 0, 4 ,8 ,4, 3, 9};
-		int sum = 56;
+		int[] set = {1, 7, 3, 9};
+		int sum = 4;
 		if(subsetExists(set,sum)==true){
 			System.out.println("yup");
 		}else{
