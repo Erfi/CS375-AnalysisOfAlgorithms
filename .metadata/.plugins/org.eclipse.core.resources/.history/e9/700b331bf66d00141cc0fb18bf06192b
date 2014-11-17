@@ -1,0 +1,15 @@
+
+public class ExhustiveSubsetSum {
+	public static boolean subsetExists(int[] set, int sum){
+		if(sum==0){
+			return true;
+		}
+		if((set.length) && (sum != 0)){
+			
+		}
+	}
+	public static void main(String[] args) {
+
+	}
+
+}

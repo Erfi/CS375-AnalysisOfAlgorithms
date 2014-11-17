@@ -1,0 +1,26 @@
+
+public class ExhustiveSubsetSum {
+	public static boolean subsetExists(int[] set, int size,  int sum){
+		if(sum==0){
+			return true;
+		}
+		if((size == 0) && (sum != 0)){
+			return false;
+		}
+		if(set[size-1] > sum){ 
+			return subsetExists(set,size-1,sum);
+		}
+		return subsetExists(set, size-1, sum) || subsetExists(set, size-1, sum-set[size-1]);
+	}
+	
+	public static void main(String[] args) {
+		int[] set = {1, 7, 21, 0, 4 ,8 ,4, 3, 9};
+		int sum = 56;
+		if(subsetExists(set,sum)==true){
+			System.out.println("yup");
+		}else{
+			System.out.println("nope");
+		}
+	}
+
+}
