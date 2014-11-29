@@ -11,8 +11,8 @@ public class Timer {
 		endTime = System.nanoTime();
 	}
 	
-	//gives the runtime is miliseconds
+	//gives the runtime is microseconds
 	public static long getRunTime(){
-		return (endTime - startTime) / 1000000;
+		return (endTime - startTime) / 1000;
 	}
 }

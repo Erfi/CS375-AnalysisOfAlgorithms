@@ -1,0 +1,70 @@
+import java.util.*;
+
+public class aproxTest {
+	
+	
+	public boolean[][] results;
+	
+	
+	//exact algorithm to check correctness
+//	public DynamicSubsetSum Dynamic;
+	
+	//approx algorithms
+	public greedy Greedy;
+	public HillClimbingSubsetSum Hill;
+	public RandomSubsetSum Random;
+	public SimulatedAnnealingSum Annealing;
+	public Random rand;
+	public long k;
+	public ArrayList<Long> set;
+	
+	
+	public aproxTest(){
+		results = new boolean[50][5];
+		
+//		Dynamic = new DynamicSubsetSum();
+		
+		Greedy = new greedy();
+		Hill = new HillClimbingSubsetSum();
+		Random = new RandomSubsetSum();
+		Annealing = new SimulatedAnnealingSum();
+		rand = new Random();
+		
+		k = 25000000000000L;
+		set = new ArrayList<Long>();
+		
+	}
+	
+	public void newRandomList(){
+		set.clear();
+		for(int i = 0; i<100; i++){
+			set.add(rand.nextLong());
+		}
+	}
+	
+	public void runTest(){
+		for(int i = 0; i<50; i++){
+			newRandomList();
+//			boolean real = this.Dynamic.run(this.k, this.set);
+			boolean hillRun = this.Hill.run(this.k, 20, this.set);
+ 			boolean greedyRun = this.Greedy.run(this.k, this.set);
+			boolean annealingRun = this.Annealing.run(this.k, 20, this.set);
+			boolean randomRun = this.Random.run(this.k, this.set);
+			
+//			this.results[i][0] = real;
+			this.results[i][1] = hillRun;
+			this.results[i][2] = greedyRun;
+			this.results[i][3] = annealingRun;
+			this.results[i][4] = randomRun;
+		}
+	}
+	
+	public static void main(String[] args){
+		aproxTest run = new aproxTest();
+		run.runTest();
+		boolean[][] answer = run.results;
+		for(int i = 0; i<50; i++){
+			System.out.println(answer[i]);
+		}
+	}
+}

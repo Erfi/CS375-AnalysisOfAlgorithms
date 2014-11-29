@@ -1,0 +1,58 @@
+/*
+ * Erfan Azad
+ * Date: 19 November 2014
+ * This is the driver class for the two exact algorithms. [Dynamic and Exhustive]
+ */
+
+import java.util.Random;
+
+public class ExactDriver {
+	
+	
+	public static int[] makeSet(int size){
+		Random rand = new Random();
+		int[] set = new int[size];
+		for(int i=0; i<size; i++){
+			set[i] = rand.nextInt(50);
+		}
+		return set;
+	}
+	
+	public static void main(String[] args) {
+		DynamicSubsetSum dynamic = new DynamicSubsetSum();
+		ExhaustiveSubsetSum exhustive = new ExhaustiveSubsetSum();
+		
+		for(int i=0; i<70; i++){
+			int[] set = makeSet(100);
+			int sum = 10*i;
+			long dynamicTime;
+			long exhustiveTime;
+
+
+			Timer.start();
+			boolean dynamicResult = dynamic.subsetExists(set,sum);
+			Timer.stop();
+			dynamicTime = Timer.getRunTime();
+
+			Timer.start();
+			boolean exhustiveResult = exhustive.subsetExists(set, set.length, sum);
+			Timer.stop();
+			exhustiveTime = Timer.getRunTime();
+
+//			if(dynamicResult){
+//				System.out.println("Dynamic: Set Exists. time: "+dynamicTime + " ms");
+//			}else{
+//				System.out.println("Dynamic: Set Does Not Exist. time: "+dynamicTime + " ms");
+//			}
+//
+//			if(exhustiveResult){
+//				System.out.println("Exhustive: Set Exists. time: "+exhustiveTime + " ms");
+//			}else{
+//				System.out.println("Exhustive: Set Does Not Exist. time: "+exhustiveTime + " ms");
+//			}
+			System.out.println("["+sum+"]" + " [" +dynamicTime +"] [" + exhustiveTime+"]");
+		}
+		
+	}
+
+}

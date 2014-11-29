@@ -1,0 +1,46 @@
+//Sam Goldberg, Ian MacClancy, Erfan Azad
+//Analysis of Algorithms
+
+import java.util.*;
+import java.lang.Math;
+
+
+public class RandomSubsetSum{
+	
+	
+	public int randomSubsetSum(int n, ArrayList<Integer> list, int iterations){
+		//Create generator and variables
+		Random ranGen = new Random();
+		ArrayList<Integer> resList = new ArrayList<Integer>();
+		
+		int setInd = 0;
+		int total = 0;
+		int minRes = Integer.MAX_VALUE;
+		
+		//For loop to create random subsets, precisely as many as "iterations"
+		for(int i = 0; i<iterations; i++){
+			total = 0;
+			int subSize = ranGen.nextInt(list.size());
+			ArrayList<Integer> indicies = new ArrayList<Integer>();
+			ArrayList<Integer> subSet = new ArrayList<Integer>();
+			//For Loop to create each individual subset
+			for(int j = 0; j<subSize; j++){
+				int subInd = ranGen.nextInt(list.size()-1);
+				if (indicies.contains(subInd)){
+					j--;
+					continue;
+				}
+				subSet.add(list.get(subInd));
+				total+=list.get(subInd);
+				indicies.add(subInd);
+			}
+			resList.add(Math.abs(n - total));
+		}
+		//Loop to go through reslist and check for the min
+		for(int k = 0; k < resList.size(); k++){
+			if(minRes>resList.get(k))
+				minRes = resList.get(k);
+		}
+		return minRes;
+	}
+}

@@ -1,0 +1,43 @@
+
+import java.util.*;
+
+public class greedy{
+	
+	public greedy(){
+	}
+	
+	public boolean greedyAlg(int k, ArrayList<Integer> s){
+		Collections.sort(s, Collections.reverseOrder());
+		int sumS = 0;
+		ArrayList<Integer> subS = new ArrayList<Integer>();
+		
+		for(int i=0; i<s.size(); i++){
+			if(s.get(i) > k){
+				continue;
+				}
+			else if(s.get(i) == k){
+				return true;
+				}
+			else if(s.get(i) < k && (s.get(i)+ sumS) <= k){
+				subS.add(s.get(i));
+				sumS += s.get(i);
+				if(sumS == k){
+					 return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	public static void main(String[] args){
+		greedy me = new greedy();
+		ArrayList<Integer> s = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 9));
+		int k = 4;
+		Timer.start();
+		boolean result = me.greedyAlg(k,s);
+		Timer.stop();
+		System.out.println(result);
+		System.out.println(Timer.getRunTime());
+	}
+}

@@ -1,0 +1,76 @@
+
+import java.util.*;
+
+public class DynamicSubsetSum {
+	
+	//constructor
+	public DynamicSubsetSum(){
+	}
+	
+	public static boolean subsetExists(ArrayList<Long> set, long sum){
+		System.out.println("sum + 1 <subsetExists>: " + (int) (sum + 1));
+		System.out.println("size+1 <subsetExists>: " + set.size() + 1);
+		
+		boolean[][] Q = new boolean[(int) (sum + 1)][set.size() + 1];
+		
+		for(int i=0; i <= set.size(); i++){//for all sum == 0 the Q[i][j] = 0
+			Q[0][i] = true;
+		}
+		
+		for(int i=1; i <= sum; i++){//for all empty sets with sum not 0 the Q[i][j] is false
+			Q[i][0] = false;
+		}
+		
+		for(int i=1; i<=sum; i++){
+			for(int j=1; j<=set.size(); j++){
+				Q[i][j] = Q[i][j-1];
+				if(i >= set.get(j-1)){//if sum is bigger than or equal to the j-1th element of set
+					//then 
+					Q[i][j] = Q[i][j] || Q[(int) (i- set.get(j-1))][j-1];
+				}
+			}
+		}
+		
+//		//code below is for printing the Q table
+//		for(int i=0; i<=sum; i++){
+//			for(int j=0; j<=set.length; j++){
+//				if(Q[i][j] == true){
+//					System.out.print(" [ " + Q[i][j] +"  ] ");
+//				}else{
+//					System.out.print(" [ " + Q[i][j] +" ] ");
+//				}
+//			}
+//			System.out.print('\n');
+//		}
+		
+		
+		return Q[(int) sum][set.size()];
+	}
+	
+	
+	//runs the algorithm and return a boolean result
+	//return true if the sum is found within the set
+	//False if the sum cannot be found in the set
+	public boolean run(long sum, ArrayList<Long> set){
+		System.out.println("sum + 1 <run>: " + (int) (sum));
+		return subsetExists(set,sum);
+	}
+	
+	public static void main(String[] args) {
+		ArrayList<Long> set = new ArrayList<Long>(Arrays.asList(1L,3L,4L,5L,6L,7L,8L,0L,45L,6L,7L,5L,2L,3L,35L,14L,3L,12L,7L,22L,06L,1L,2L,3L,5L,2L,3L,24L,7L,34L,35L));
+		int sum = 54;
+		long time;
+		Timer.start();
+		boolean result = subsetExists(set,sum);
+		Timer.stop();
+		time = Timer.getRunTime();
+		if(result==true){
+			System.out.println("yup");
+			System.out.println("Runtime: "+ time);
+		}else{
+			System.out.println("nope");
+			System.out.println("Runtime: "+ time);
+		}
+	}
+
+}
