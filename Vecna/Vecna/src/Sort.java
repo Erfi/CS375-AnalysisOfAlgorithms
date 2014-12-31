@@ -1,5 +1,8 @@
 /*
  * Modified by Erfan Azad on 30 December 2014
+ * File: Sort.java
+ * Description: This class contains methods of sorting
+ * an array of integers.
  */
 
 public class Sort {
@@ -9,6 +12,10 @@ public class Sort {
 	 * 
 	 * Limitations: The elements in the array cannot
 	 * be bigger than Integer.MAX_VALUE
+	 * 
+	 * @param	unsorted	array of unsorted integers.
+	 * @param	sorted		an array that will hold the sorted integers.
+	 * @return	this method does not return anything but prints out the sorted array.
 	 */
 	public static void reverseSort(int[] unsorted, int[] sorted){
 		if(unsorted.length != sorted.length){
